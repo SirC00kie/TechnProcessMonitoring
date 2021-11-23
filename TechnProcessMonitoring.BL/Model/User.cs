@@ -8,6 +8,7 @@ namespace TechnProcessMonitoring.BL.Model
 {
     class User
     {
+        #region Свойства
         /// <summary>
         /// Имя
         /// </summary>
@@ -31,6 +32,7 @@ namespace TechnProcessMonitoring.BL.Model
         /// <summary>
         ///  Полное имя
         /// </summary>
+        
         public string FullName
         {
             get
@@ -38,26 +40,27 @@ namespace TechnProcessMonitoring.BL.Model
                 return $"{SecondName} {Name}.";
             }
         }
-
+        #endregion
         public User(string name, string secondName, string login, string password)
         {
+            #region Проверка условий
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException("Имя не может быть пустым или null", nameof(name));
             }
             if (string.IsNullOrWhiteSpace(secondName))
             {
-                throw new ArgumentNullException(nameof(secondName));
+                throw new ArgumentNullException("Фамилия не может быть пустым или null", nameof(secondName));
             }
             if (string.IsNullOrWhiteSpace(login))
             {
-                throw new ArgumentNullException(nameof(login));
+                throw new ArgumentNullException("Логин не может быть пустым или null", nameof(login));
             }
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new ArgumentNullException(nameof(login));
+                throw new ArgumentNullException("Пароль не может быть пустым или null", nameof(login));
             }
-
+            #endregion
             Name = name;
             SecondName = secondName;
             Login = login;

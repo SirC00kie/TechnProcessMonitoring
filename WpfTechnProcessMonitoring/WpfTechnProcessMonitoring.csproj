@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TechnProcessMonitoring.BL\TechnProcessMonitoring.BL.csproj">
+      <Project>{1baa7ac3-ff16-40c3-b9ae-c9d0c7332d98}</Project>
+      <Name>TechnProcessMonitoring.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

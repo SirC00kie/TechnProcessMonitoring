@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TechnProcessMonitoring.BL.Model
 {
-    class DataTechnProcess
+    public class DataTechnProcess
     {
         #region Свойства
         /// <summary>

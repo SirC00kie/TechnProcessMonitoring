@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TechnProcessMonitoring.BL.Model
 {
-    class User
+    [Serializable]
+    public class User
     {
         #region Свойства
         /// <summary>
@@ -67,6 +64,20 @@ namespace TechnProcessMonitoring.BL.Model
             Password = password;
         }
 
+        public User(string login, string password)
+        {
+            if (string.IsNullOrWhiteSpace(login))
+            {
+                throw new ArgumentNullException("Логин не может быть пустым или null", nameof(login));
+            }
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentNullException("Пароль не может быть пустым или null", nameof(login));
+            }
+
+            Login = login;
+            Password = password;
+        }
         public override string ToString()
         {
             return Name;

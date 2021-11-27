@@ -55,7 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Viev\MainViev.xaml.cs">
+      <DependentUpon>MainViev.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Viev\RegistrationViev.xaml.cs">
+      <DependentUpon>RegistrationViev.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Viev\AuthorizationViev.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -63,10 +69,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Viev\AuthorizationViev.xaml.cs">
+      <DependentUpon>AuthorizationViev.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Viev\MainViev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Viev\RegistrationViev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

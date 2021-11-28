@@ -8,22 +8,22 @@ namespace TechnProcessMonitoring.BL.Model
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string SecondName { get; private set; }
+        public string SecondName { get; }
 
         /// <summary>
         /// Логин
         /// </summary>
-        public string Login { get; private set; }
+        public string Login { get; }
 
         /// <summary>
         /// Пароль
         /// </summary>
-        public string Password { get; private set; }
+        public string Password { get; }
 
         /// <summary>
         ///  Полное имя

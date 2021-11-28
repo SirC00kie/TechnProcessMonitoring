@@ -78,6 +78,10 @@ namespace TechnProcessMonitoring.BL.Controller
             if (keyAuth != null)
             {
                 subAuth = keyAuth.OpenSubKey(user.Login, true);
+                if (subAuth!= null && (subAuth.GetValue("login").ToString() == user.Login))
+                {
+                    return true;
+                }
                 if (subAuth != null && (subAuth.GetValue("login").ToString() == user.Login) && (subAuth.GetValue("password").ToString() == user.Password))
                 {
                     return true;

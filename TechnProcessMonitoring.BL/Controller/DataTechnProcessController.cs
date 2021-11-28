@@ -36,16 +36,21 @@ namespace TechnProcessMonitoring.BL.Controller
             }
         }
 
-        public void Open(string fileName)
+        public bool Open(string fileName)
         {
             DataResults.Clear();
             var formatter = new BinaryFormatter();
             
             using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {
-                if (fs.Length > 0)
+                try
                 {
                     DataResults = (List<DataTechnProcess>)formatter.Deserialize(fs);
+                    return true;
+                }
+                catch(Exception)
+                {
+                    return false;
                 }
             }
         }

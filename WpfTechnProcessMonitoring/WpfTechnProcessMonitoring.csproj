@@ -43,6 +43,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,15 +55,20 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Viev\AboutViev.xaml.cs">
+      <DependentUpon>AboutViev.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viev\MainViev.xaml.cs">
       <DependentUpon>MainViev.xaml</DependentUpon>
     </Compile>
@@ -71,6 +78,10 @@
     <Compile Include="Viev\SaveFileViev.xaml.cs">
       <DependentUpon>SaveFileViev.xaml</DependentUpon>
     </Compile>
+    <Page Include="Viev\AboutViev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Viev\AuthorizationViev.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

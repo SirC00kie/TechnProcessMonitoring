@@ -87,5 +87,6 @@ namespace WpfTechnProcessMonitoring.Viev
             authorizationViev.Show();
             Close();
         }
+
     }
 }

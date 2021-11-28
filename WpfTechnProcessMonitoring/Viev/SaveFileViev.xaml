@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTechnProcessMonitoring.Viev"
         mc:Ignorable="d"
-        Title="SaveFileViev" Height="200" Width="300">
+        Title="SaveFileViev" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button" x:Key="MainButton">
             <Setter Property="Background" Value="#FFBF9969"/>
@@ -14,7 +14,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="15"/>
         </Style>
         <Style TargetType="TextBox" x:Key="MainTextBox">
@@ -24,7 +24,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="Width" Value="160"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
@@ -51,6 +51,6 @@
                  Grid.Row="1"
                  Text=""
                  Margin="5,0,0,0"
-                 Style="{StaticResource MainTextBox}" TextChanged="PathTextBox_TextChanged"/>
+                 Style="{StaticResource MainTextBox}"/>
     </Grid>
 </Window>

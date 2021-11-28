@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTechnProcessMonitoring.Viev"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:charts ="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
-        Title="MainViev" Height="768" Width="1024" ResizeMode="NoResize" WindowStyle="ThreeDBorderWindow">
+        Title="MainViev" Height="768" Width="1024" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button" x:Key="MainButton">
             <Setter Property="Background" Value="#FFBF9969"/>
@@ -56,7 +57,7 @@
                 Grid.Column="0"
                 Content="Добавить запись"
                 Margin="25,0,25,250"
-                Style="{StaticResource MainButton}" Click="AddButton_Click"/>
+                Style="{StaticResource MainButton}" Click="AddButton_Click" RenderTransformOrigin="0.501,0.5"/>
         <Button x:Name="ChangeButton"
                 Grid.Row ="2"
                 Grid.Column="0"
@@ -127,12 +128,13 @@
               Width="1024"
               Margin="0,0,0,75"
               VerticalAlignment="Top"
-              HorizontalAlignment="Left">
+              HorizontalAlignment="Left"
+              >
             <MenuItem Header="Файл">
                 <Button Name="OpenButton" Content="Открыть" Width="150" Click="OpenButton_Click" />
                 <Button Name="SaveButton"  Content="Сохранить" Width="150" Click="SaveButton_Click"/>
                 <Button Name="CreateReportButton"  Content="Создать отчёт" Width="150" Click="CreateReportButton_Click" />
-                <Button Name="SaveReportButton"  Content="Сохранить отчёт" Width="150" Click="SaveReportButton_Click"/>
+                <Button Name="OpenReportButton"  Content="Открыть отчёт" Width="150" Click="OpenReportButton_Click"/>
                 <Button Name="QuitButton"  Content="Выход" Width="150" Click="QuitButton_Click" />
             </MenuItem>
             <MenuItem Header="Справка">
@@ -148,20 +150,29 @@
             Height="230"
             Margin="5,5,5,0"
             AutoGenerateColumns="False"
-            RowBackground="#FF8195A6" MouseDoubleClick="DataViev_MouseDoubleClick">
+            RowBackground="#FF8195A6"
+            IsReadOnly="True"
+            MouseDoubleClick="DataViev_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Расход, кг/сек" Binding="{Binding Consumption}" Width="180"/>
                 <DataGridTextColumn Header="Давление, атм" Binding="{Binding Pressure}" Width="250"/>
                 <DataGridTextColumn Header="Концентрация, мг/м3" Binding="{Binding Concentration}" Width="250"/>
             </DataGrid.Columns>
         </DataGrid>
-        <lvc:CartesianChart
-            x:Name="LiveChart"
-            Grid.Row="2"
+        <WindowsFormsHost 
             Grid.Column="1"
+            Grid.Row="2"
             Width="680"
-            Height="380"
-            Margin="5,5,5,15"
-            Background="White"/>
+            Height="380" 
+            Margin="0,0,0,0"
+            VerticalAlignment="Top">
+            <charts:Chart x:Name="MainChart"  >
+                <charts:Chart.Legends>
+                    <charts:Legend >
+                       
+                    </charts:Legend>
+                </charts:Chart.Legends>
+            </charts:Chart>
+        </WindowsFormsHost>
     </Grid>
 </Window>

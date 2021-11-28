@@ -1,12 +1,9 @@
 ﻿using System.Windows;
 using TechnProcessMonitoring.BL.Controller;
-using TechnProcessMonitoring.BL.Model;
 using System.Diagnostics;
 using System.Linq;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Defaults;
-using System.Collections.Generic;
+using System.Windows.Forms.DataVisualization.Charting;
+using Microsoft.Win32;
 
 namespace WpfTechnProcessMonitoring.Viev
 {
@@ -22,6 +19,14 @@ namespace WpfTechnProcessMonitoring.Viev
         public MainViev()
         {
             InitializeComponent();
+            MainChart.ChartAreas.Add(new ChartArea("main"));
+
+            var pressureSeries = new Series(_pressure){ IsValueShownAsLabel = true };
+            var concentrationSeries = new Series(_concentration) { IsValueShownAsLabel = true };
+            pressureSeries.ChartType = SeriesChartType.Line;
+            concentrationSeries.ChartType = SeriesChartType.Line;
+            MainChart.Series.Add(pressureSeries);
+            MainChart.Series.Add(concentrationSeries);
         }
 
         private void Clear()
@@ -75,25 +80,30 @@ namespace WpfTechnProcessMonitoring.Viev
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
+            
             var val = Validation();
-            if (val != null)
+            if (((int)val[0] < DataTechnProcessController.DataResults.Count) && ((int)val[0]>0))
             {
-                var result = DataTechnProcessController.DataResults[(int)val[0]];
-                if (result != null)
+                if (val != null)
                 {
-                    val[0]++;
-                    _experiment.Change(val);
-                    DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
+                    var result = DataTechnProcessController.DataResults[(int)val[0]];
+                    if (result != null)
+                    {
+                        val[0]++;
+                        _experiment.Change(val);
+                        DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -121,19 +131,35 @@ namespace WpfTechnProcessMonitoring.Viev
 
         private void GraphicButton_Click(object sender, RoutedEventArgs e)
         {
-            // LiveChart.Series.Clear();
-            // var result = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
-            // result = new List<DataTechnProcess>();
-            // SeriesCollection seriescollection = new SeriesCollection { };
-            //
-            // for (int i = 0; i < result.Count; i++)
-            // {
-            //     seriescollection.Add({ Title = "Расход", ChartValues = new ChartValues<double>(result)};
-            // }
+            MainChart.Series[_pressure].Points.Clear();
+            MainChart.Series[_concentration].Points.Clear();
+            var result = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
+            if (result.Count > 0)
+            {
+                for (int i = 0; i < result.Count; i++)
+                {
+                    MainChart.Series[_pressure].Points.AddXY(result[i].Consumption, result[i].Pressure);
+                    MainChart.Series[_concentration].Points.AddXY(result[i].Consumption, result[i].Concentration);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нет данных эксперимента", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (DataTechnProcessController.DataResults.Count > 0)
+            {
+                MainChart.Series[_pressure].Points.Clear();
+                MainChart.Series[_concentration].Points.Clear();
+                DataTechnProcessController.DataResults.Clear();
+                DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
+            }
+            else
+            {
+                MessageBox.Show("Нет данных которые надо очистить", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void DataViev_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -152,22 +178,49 @@ namespace WpfTechnProcessMonitoring.Viev
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filename = openFileDialog.FileName;
+                bool IsTrue;
+                IsTrue = _experiment.Open(filename);
+                if (IsTrue)
+                {
+                    DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
 
+                }
+                else
+                {
+                    DataTechnProcessController.DataResults.Clear();
+                    DataViev.ItemsSource = DataTechnProcessController.DataResults.ToList();
+                    MessageBox.Show("Не удалось прочитать файл", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _check = true;
+            SaveFileViev Form = new SaveFileViev(_check);
+            Form.ShowDialog();
         }
 
         private void CreateReportButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _check = false;
+            GraphicButton_Click(sender, e);
+            SaveFileViev Form = new SaveFileViev(_check, MainChart);
+            Form.Show();
         }
 
-        private void SaveReportButton_Click(object sender, RoutedEventArgs e)
+        private void OpenReportButton_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filename = openFileDialog.FileName;
+                _experiment.OpenReport(filename);
+            }
         }
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
@@ -177,7 +230,10 @@ namespace WpfTechnProcessMonitoring.Viev
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AboutViev aboutViev = new AboutViev();
+            aboutViev.Show();
         }
+
+        
     }
 }

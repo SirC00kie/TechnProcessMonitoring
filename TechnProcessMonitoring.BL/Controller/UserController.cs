@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using TechnProcessMonitoring.BL.Model;
 using Microsoft.Win32;
 
@@ -26,6 +22,7 @@ namespace TechnProcessMonitoring.BL.Controller
         /// <exception cref="ArgumentNullException"></exception>
         public UserController(string name, string secondName, string login, string password)
         {
+            #region Проверки
             if (string.IsNullOrWhiteSpace(login))
             {
                 throw new ArgumentNullException("Логин не может быть пустым", nameof(login));
@@ -42,9 +39,9 @@ namespace TechnProcessMonitoring.BL.Controller
             {
                 throw new ArgumentNullException("Фамилия не может быть пустым", nameof(secondName));
             }
-
+            #endregion
             CurrentUser = new User(name, secondName, login, password);
-            Save(CurrentUser);
+            // Save(CurrentUser);
         }
 
         /// <summary>
@@ -54,6 +51,7 @@ namespace TechnProcessMonitoring.BL.Controller
         /// <param name="password"></param>
         public UserController(string login, string password)
         {
+            #region Проверки
             if (string.IsNullOrWhiteSpace(login))
             {
                 throw new ArgumentNullException("Логин не может быть пустым", nameof(login));
@@ -63,7 +61,7 @@ namespace TechnProcessMonitoring.BL.Controller
             {
                 throw new ArgumentNullException("Пароль не может быть пустым", nameof(password));
             }
-            
+            #endregion
             CurrentUser = new User(login,password);
         }
 
@@ -75,16 +73,19 @@ namespace TechnProcessMonitoring.BL.Controller
         public bool Load(User user)
         {
             _currentUserKey = Registry.CurrentUser;
+            RegistryKey subAuth = null;
             RegistryKey keyAuth = _currentUserKey.OpenSubKey("keyAuth", true);
-            if ((keyAuth.GetValue("login").ToString() == user.Login) && (keyAuth.GetValue("password").ToString() == user.Password))
+            if (keyAuth != null)
             {
-                return true;
+                subAuth = keyAuth.OpenSubKey(user.Login, true);
+                if (subAuth != null && (subAuth.GetValue("login").ToString() == user.Login) && (subAuth.GetValue("password").ToString() == user.Password))
+                {
+                    return true;
+                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
+            
 
         /// <summary>
         /// Сохранение пользователя
@@ -93,11 +94,13 @@ namespace TechnProcessMonitoring.BL.Controller
         {
             _currentUserKey = Registry.CurrentUser;
             var keyAuth = _currentUserKey.CreateSubKey("KeyAuth");
-            keyAuth.SetValue("Name", user.Name);
-            keyAuth.SetValue("SecondName", user.SecondName);
-            keyAuth.SetValue("login", user.Login);
-            keyAuth.SetValue("password", user.Password);
+            var curentKey = keyAuth.CreateSubKey(user.Login);
+            curentKey.SetValue("Name", user.Name);
+            curentKey.SetValue("SecondName", user.SecondName);
+            curentKey.SetValue("login", user.Login); 
+            curentKey.SetValue("password", user.Password);
             keyAuth.Close();
+            curentKey.Close();
         }
         
         

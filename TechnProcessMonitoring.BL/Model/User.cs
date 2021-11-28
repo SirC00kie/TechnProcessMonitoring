@@ -2,7 +2,6 @@
 
 namespace TechnProcessMonitoring.BL.Model
 {
-    [Serializable]
     public class User
     {
         #region Свойства

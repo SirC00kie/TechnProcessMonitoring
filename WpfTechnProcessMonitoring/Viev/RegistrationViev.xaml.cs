@@ -21,12 +21,39 @@ namespace WpfTechnProcessMonitoring.Viev
     /// </summary>
     public partial class RegistrationViev : Window
     {
-        private UserController userController = new UserController();
+        private readonly UserController _userController = new UserController();
         public RegistrationViev()
         {
             InitializeComponent();
         }
 
+        private void Clear()
+        {
+            TextBoxLogin.Clear();
+            TextBoxPassword.Clear();
+            TextBoxName.Clear();
+            TextBoxSecondName.Clear();
+        }
+
+        private bool Validation()
+        {
+            if (!string.IsNullOrEmpty(TextBoxLogin.Text)
+                && !string.IsNullOrWhiteSpace(TextBoxLogin.Text) 
+                && !string.IsNullOrEmpty(TextBoxPassword.Text)
+                && !string.IsNullOrWhiteSpace(TextBoxPassword.Text)
+                && !string.IsNullOrEmpty(TextBoxName.Text)
+                && !string.IsNullOrWhiteSpace(TextBoxName.Text)
+                && !string.IsNullOrEmpty(TextBoxSecondName.Text)
+                && !string.IsNullOrWhiteSpace(TextBoxSecondName.Text))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
         private void RegistryButton_Click(object sender, RoutedEventArgs e)
         {
             var login = TextBoxLogin.Text;
@@ -34,10 +61,24 @@ namespace WpfTechnProcessMonitoring.Viev
             var name = TextBoxName.Text;
             var secondName = TextBoxSecondName.Text;
 
-            var newUser = new UserController(name, secondName, login, password);
-            AuthorizationViev authorizationViev = new AuthorizationViev();
-            authorizationViev.Show();
-            Close();
+            var newUser = new User(name, secondName, login, password);
+
+            if (Validation())
+            {
+                if (_userController.Load(newUser))
+                {
+                    MessageBox.Show("Пользователь уже существует", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Clear();
+                }
+                else
+                {
+                    _userController.Save(newUser);
+                    AuthorizationViev authorizationViev = new AuthorizationViev();
+                    authorizationViev.Show();
+                    Close();
+                }
+            }
+            
         }
 
         private void AuthorizeButton_Click(object sender, RoutedEventArgs e)

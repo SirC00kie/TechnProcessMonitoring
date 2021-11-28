@@ -4,9 +4,164 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTechnProcessMonitoring.Viev"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainViev" Height="450" Width="800">
+        Title="MainViev" Height="768" Width="1024" ResizeMode="NoResize" WindowStyle="ThreeDBorderWindow">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="MainButton">
+            <Setter Property="Background" Value="#FFBF9969"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="MainTextBox">
+            <Setter Property="Background" Value="#FF8195A6"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="MainTextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="724"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="238"/>
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" Fill="#1E3340" StrokeThickness="0" />
+        <Rectangle Grid.Row="0" Grid.Column="1" Fill="#1E3340" StrokeThickness="0" />
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="#FF4F6273" StrokeThickness="0" />
+        <Rectangle Grid.Row="2" Grid.Column="1" Fill="#FF4F6273" StrokeThickness="0" />
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" />
+        <Rectangle Grid.Row="2" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" />
+        <Button x:Name="AddButton"
+                Grid.Row ="2"
+                Grid.Column="0"
+                Content="Добавить запись"
+                Margin="25,0,25,250"
+                Style="{StaticResource MainButton}" Click="AddButton_Click"/>
+        <Button x:Name="ChangeButton"
+                Grid.Row ="2"
+                Grid.Column="0"
+                Content="Изменить запись"
+                Margin="25,0,25,125"
+                Style="{StaticResource MainButton}" Click="ChangeButton_Click"/>
+        <Button x:Name="DeleteButton"
+                Grid.Row ="2"
+                Grid.Column="0"
+                Content="Удалить запись"
+                Margin="25,0,25,0"
+                Style="{StaticResource MainButton}" Click="DeleteButton_Click"/>
+        <Button x:Name="GraphicButton"
+                Grid.Row ="2"
+                Grid.Column="0"
+                Content="Построить график"
+                Margin="25,125,25,0"
+                Style="{StaticResource MainButton}" Click="GraphicButton_Click"/>
+        <Button x:Name="ClearButton"
+                Grid.Row ="2"
+                Grid.Column="0"
+                Content="Очистить результаты эксперемента"
+                Margin="25,250,25,0"
+                Style="{StaticResource MainButton}" Click="ClearButton_Click"/>
+        <TextBox x:Name="TextBoxConsumption"
+                 Grid.Row="1"
+                 Text=""
+                 Margin="0,0,25,100"
+                 Style="{StaticResource MainTextBox}"/>
+        <TextBox x:Name="TextBoxPressure"
+                 Grid.Row="1"
+                 Text=""
+                 Margin="0,0,25,0"
+                 Style="{StaticResource MainTextBox}"/>
+        <TextBox x:Name="TextBoxConcentration"
+                 Grid.Row="1"
+                 Text=""
+                 Margin="0,100,25,00"
+                 Style="{StaticResource MainTextBox}"/>
+        <TextBlock x:Name="TextMain"
+                   Grid.Row="0"
+                   Text="Мониторинг"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   FontSize="25" 
+                   Margin="15"
+                   Foreground="White"/>
+        <TextBlock x:Name="TextConsumption"
+                   Grid.Row="1"
+                   Text="Расход, кг/сек:"
+                   Margin="5,0,0,100" 
+                   Style="{StaticResource MainTextBlock}"/>
+        <TextBlock x:Name="TextPressure"
+                   Grid.Row="1"
+                   Text="Давление, атм:"
+                   Margin="5,0,0,0"
+                   Style="{StaticResource MainTextBlock}"/>
+        <TextBlock x:Name="TextConcentration"
+                   Grid.Row="1"
+                   Text="Концентрация, мг/м3:"
+                   Margin="5,100,0,0"
+                   Style="{StaticResource MainTextBlock}"/>
+        <Menu x:Name="MainMenu"
+              Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Height="25"
+              Width="1024"
+              Margin="0,0,0,75"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left">
+            <MenuItem Header="Файл">
+                <Button Name="OpenButton" Content="Открыть" Width="150" Click="OpenButton_Click" />
+                <Button Name="SaveButton"  Content="Сохранить" Width="150" Click="SaveButton_Click"/>
+                <Button Name="CreateReportButton"  Content="Создать отчёт" Width="150" Click="CreateReportButton_Click" />
+                <Button Name="SaveReportButton"  Content="Сохранить отчёт" Width="150" Click="SaveReportButton_Click"/>
+                <Button Name="QuitButton"  Content="Выход" Width="150" Click="QuitButton_Click" />
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <Button Name="InfoButton"  Content="Посмотреть справку" Width="150" Click="InfoButton_Click" />
+                <Button Name="AboutButton"  Content="О программе" Width="150" Click="AboutButton_Click" />
+            </MenuItem>
+        </Menu>
+        <DataGrid   
+            x:Name="DataViev"
+            Grid.Row="1"
+            Grid.Column="1"
+            Width="680"
+            Height="230"
+            Margin="5,5,5,0"
+            AutoGenerateColumns="False"
+            RowBackground="#FF8195A6" MouseDoubleClick="DataViev_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Расход, кг/сек" Binding="{Binding Consumption}" Width="180"/>
+                <DataGridTextColumn Header="Давление, атм" Binding="{Binding Pressure}" Width="250"/>
+                <DataGridTextColumn Header="Концентрация, мг/м3" Binding="{Binding Concentration}" Width="250"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <lvc:CartesianChart
+            x:Name="LiveChart"
+            Grid.Row="2"
+            Grid.Column="1"
+            Width="680"
+            Height="380"
+            Margin="5,5,5,15"
+            Background="White"/>
     </Grid>
 </Window>

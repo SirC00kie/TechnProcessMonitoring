@@ -2,25 +2,26 @@
 
 namespace TechnProcessMonitoring.BL.Model
 {
+    [Serializable]
     public class DataTechnProcess
     {
         #region Свойства
         /// <summary>
         /// Расход, кг/сек
         /// </summary>
-        public int Consumption { get; set; }
+        public double Consumption { get; set; }
 
         /// <summary>
         /// Давление, атм
         /// </summary>
-        public float Pressure { get; set; }
+        public double Pressure { get; set; }
 
         /// <summary>
         /// Концентрация, мг/м3
         /// </summary>
-        public float Concentration { get; set; }
+        public double Concentration { get; set; }
         #endregion
-        public DataTechnProcess(int consumption, float pressure, float concentration)
+        public DataTechnProcess(double consumption, double pressure, double concentration)
         {
             #region Проверка исключений
             if (consumption < 0)

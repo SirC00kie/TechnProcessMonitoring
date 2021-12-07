@@ -7,7 +7,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:charts ="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
-        Title="MainViev" Height="768" Width="1024" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
+        Title="Мониторинг" Height="768" Width="1024" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button" x:Key="MainButton">
             <Setter Property="Background" Value="#FFBF9969"/>
@@ -38,95 +38,96 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="724"/>
+            <ColumnDefinition Width="222.7"/>
+            <ColumnDefinition Width="77.3"/>
+            <ColumnDefinition Width="77.5"/>
+            <ColumnDefinition Width="646.5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="238"/>
             <RowDefinition Height="400"/>
         </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Grid.Column="0" Fill="#1E3340" StrokeThickness="0" />
-        <Rectangle Grid.Row="0" Grid.Column="1" Fill="#1E3340" StrokeThickness="0" />
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="#FF4F6273" StrokeThickness="0" />
-        <Rectangle Grid.Row="2" Grid.Column="1" Fill="#FF4F6273" StrokeThickness="0" />
-        <Rectangle Grid.Row="1" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" />
-        <Rectangle Grid.Row="2" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" />
+        <Rectangle Grid.Row="0" Grid.Column="0" Fill="#1E3340" StrokeThickness="0" Grid.ColumnSpan="2" />
+        <Rectangle Grid.Row="0" Grid.Column="2" Fill="#1E3340" StrokeThickness="0" Grid.ColumnSpan="2" />
+        <Rectangle Grid.Row="1" Grid.Column="2" Fill="#FF4F6273" StrokeThickness="0" Margin="0,0,0,0.4" Grid.ColumnSpan="2" />
+        <Rectangle Grid.Row="1" Grid.Column="2" Fill="#FF4F6273" StrokeThickness="0" Margin="0,238,0,0.4" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" Grid.ColumnSpan="2" Margin="0,0,0,0.4" />
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="#FF4F6273" StrokeThickness="0" Grid.ColumnSpan="2" Margin="0,238,0,0.4" Grid.RowSpan="2" />
         <Button x:Name="AddButton"
                 Grid.Row ="2"
                 Grid.Column="0"
                 Content="Добавить запись"
-                Margin="25,0,25,250"
-                Style="{StaticResource MainButton}" Click="AddButton_Click" RenderTransformOrigin="0.501,0.5"/>
+                Margin="25,49.6,25,300.4"
+                Style="{StaticResource MainButton}" Click="AddButton_Click" RenderTransformOrigin="0.501,0.5" Grid.ColumnSpan="2"/>
         <Button x:Name="ChangeButton"
                 Grid.Row ="2"
                 Grid.Column="0"
                 Content="Изменить запись"
-                Margin="25,0,25,125"
-                Style="{StaticResource MainButton}" Click="ChangeButton_Click"/>
+                Margin="25,112.6,25,237.4"
+                Style="{StaticResource MainButton}" Click="ChangeButton_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="DeleteButton"
                 Grid.Row ="2"
                 Grid.Column="0"
                 Content="Удалить запись"
-                Margin="25,0,25,0"
-                Style="{StaticResource MainButton}" Click="DeleteButton_Click"/>
+                Margin="25,174.6,25,175.4"
+                Style="{StaticResource MainButton}" Click="DeleteButton_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="GraphicButton"
                 Grid.Row ="2"
                 Grid.Column="0"
                 Content="Построить график"
-                Margin="25,125,25,0"
-                Style="{StaticResource MainButton}" Click="GraphicButton_Click"/>
+                Margin="25,237.6,25,112.4"
+                Style="{StaticResource MainButton}" Click="GraphicButton_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="ClearButton"
                 Grid.Row ="2"
                 Grid.Column="0"
                 Content="Очистить результаты эксперемента"
-                Margin="25,250,25,0"
-                Style="{StaticResource MainButton}" Click="ClearButton_Click"/>
+                Margin="25,299.6,25,50.4"
+                Style="{StaticResource MainButton}" Click="ClearButton_Click" Grid.ColumnSpan="2"/>
         <TextBox x:Name="TextBoxConsumption"
                  Grid.Row="1"
                  Text=""
-                 Margin="0,0,25,100"
-                 Style="{StaticResource MainTextBox}"/>
+                 Margin="0,54,25,154.4"
+                 Style="{StaticResource MainTextBox}" Grid.ColumnSpan="2"/>
         <TextBox x:Name="TextBoxPressure"
                  Grid.Row="1"
                  Text=""
-                 Margin="0,0,25,0"
-                 Style="{StaticResource MainTextBox}"/>
+                 Margin="0,104,25,104.4"
+                 Style="{StaticResource MainTextBox}" Grid.ColumnSpan="2"/>
         <TextBox x:Name="TextBoxConcentration"
                  Grid.Row="1"
                  Text=""
-                 Margin="0,100,25,00"
-                 Style="{StaticResource MainTextBox}"/>
+                 Margin="0,154,25,54.4"
+                 Style="{StaticResource MainTextBox}" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="TextMain"
                    Grid.Row="0"
                    Text="Мониторинг"
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center" 
                    FontSize="25" 
-                   Margin="15"
-                   Foreground="White"/>
+                   Margin="78,33,77,33"
+                   Foreground="White" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="TextConsumption"
                    Grid.Row="1"
                    Text="Расход, кг/сек:"
-                   Margin="5,0,0,100" 
+                   Margin="5,60,0,159.4" 
                    Style="{StaticResource MainTextBlock}"/>
         <TextBlock x:Name="TextPressure"
                    Grid.Row="1"
                    Text="Давление, атм:"
-                   Margin="5,0,0,0"
+                   Margin="5,110,0,109.4"
                    Style="{StaticResource MainTextBlock}"/>
         <TextBlock x:Name="TextConcentration"
                    Grid.Row="1"
                    Text="Концентрация, мг/м3:"
-                   Margin="5,100,0,0"
+                   Margin="5,160,0,59.4"
                    Style="{StaticResource MainTextBlock}"/>
         <Menu x:Name="MainMenu"
               Grid.Row="0"
               Grid.Column="0"
-              Grid.ColumnSpan="2"
+              Grid.ColumnSpan="4"
               Height="25"
               Width="1024"
-              Margin="0,0,0,75"
               VerticalAlignment="Top"
               HorizontalAlignment="Left"
               >
@@ -145,14 +146,14 @@
         <DataGrid   
             x:Name="DataViev"
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Width="680"
             Height="230"
-            Margin="5,5,5,0"
+            Margin="22,7,22,1.4"
             AutoGenerateColumns="False"
             RowBackground="#FF8195A6"
             IsReadOnly="True"
-            MouseDoubleClick="DataViev_MouseDoubleClick">
+            MouseDoubleClick="DataViev_MouseDoubleClick" Grid.ColumnSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Расход, кг/сек" Binding="{Binding Consumption}" Width="180"/>
                 <DataGridTextColumn Header="Давление, атм" Binding="{Binding Pressure}" Width="250"/>
@@ -160,16 +161,16 @@
             </DataGrid.Columns>
         </DataGrid>
         <WindowsFormsHost 
-            Grid.Column="1"
-            Grid.Row="2"
+            Grid.Column="2"
+            Grid.Row="1"
             Width="680"
             Height="380" 
-            Margin="0,0,0,0"
-            VerticalAlignment="Top">
+            Margin="22,238,22,0"
+            VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <charts:Chart x:Name="MainChart"  >
                 <charts:Chart.Legends>
                     <charts:Legend >
-                       
+
                     </charts:Legend>
                 </charts:Chart.Legends>
             </charts:Chart>

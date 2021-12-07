@@ -77,6 +77,7 @@ namespace TechnProcessMonitoring.BL.Model
             Login = login;
             Password = password;
         }
+        public User() { }
         public override string ToString()
         {
             return Name;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTechnProcessMonitoring.Viev"
         mc:Ignorable="d"
-        Title="RegistrationViev" Height="500" Width="400" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
+        Title="Регистрация" Height="500" Width="400" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style TargetType="Button" x:Key="MainButton">

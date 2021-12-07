@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using TechnProcessMonitoring.BL.Controller;
+using TechnProcessMonitoring.BL.Model;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -15,12 +16,15 @@ namespace WpfTechnProcessMonitoring.Viev
         private bool _check;
         private const string _pressure = "Давление";
         private const string _concentration = "Концентрация";
+        private const string _openDocx = "..\\..\\..\\Справка.docx";
         private readonly DataTechnProcessController _experiment = new DataTechnProcessController();
         public MainViev()
         {
             InitializeComponent();
-            MainChart.ChartAreas.Add(new ChartArea("main"));
-
+            var chartArea = new ChartArea("main");
+            MainChart.ChartAreas.Add(chartArea);
+            chartArea.AxisX.Title = "Расход";
+            chartArea.AxisY.Title = "Давление/Концентрация";
             var pressureSeries = new Series(_pressure){ IsValueShownAsLabel = true };
             var concentrationSeries = new Series(_concentration) { IsValueShownAsLabel = true };
             pressureSeries.ChartType = SeriesChartType.Line;
@@ -45,10 +49,10 @@ namespace WpfTechnProcessMonitoring.Viev
                 && !string.IsNullOrEmpty(TextBoxPressure.Text)
                 && !string.IsNullOrWhiteSpace(TextBoxPressure.Text)
                 && double.TryParse(TextBoxConcentration.Text, out double Concentration)
-                && double.TryParse(TextBoxConsumption.Text, out double Consuption)
+                && double.TryParse(TextBoxConsumption.Text, out double Consumption)
                 && double.TryParse(TextBoxPressure.Text, out double Pressure))
             {
-                return new double[3] { Consuption, Pressure, Consuption };
+                return new double[3] { Consumption, Pressure, Concentration };
             }
             else
             {
@@ -68,7 +72,7 @@ namespace WpfTechnProcessMonitoring.Viev
                 else
                 {
                     DataTechnProcessController controller = new DataTechnProcessController(val[0], val[1], val[2]);
-                    DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x=>x.Concentration).ToList();
+                    DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
                     Clear();
                 }
             }
@@ -82,28 +86,28 @@ namespace WpfTechnProcessMonitoring.Viev
         {
             
             var val = Validation();
-            if (((int)val[0] < DataTechnProcessController.DataResults.Count) && ((int)val[0]>0))
+
+            if (val != null)
             {
-                if (val != null)
+                if (((int)val[0] < DataTechnProcessController.DataResults.Count) && ((int)val[0] > 0))
                 {
                     var result = DataTechnProcessController.DataResults[(int)val[0]];
                     if (result != null)
                     {
-                        val[0]++;
-                        _experiment.Change(val);
-                        DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
+                     val[0]++;
+                     _experiment.Change(val);
+                     DataViev.ItemsSource = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
                     }
                     else
                     {
-                        MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                     MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
             }
-            
+            else
+            {
+               MessageBox.Show("Некорректный ввод данных", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -130,7 +134,7 @@ namespace WpfTechnProcessMonitoring.Viev
         }
 
         private void GraphicButton_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             MainChart.Series[_pressure].Points.Clear();
             MainChart.Series[_concentration].Points.Clear();
             var result = DataTechnProcessController.DataResults.OrderBy(x => x.Consumption).ToList();
@@ -225,7 +229,7 @@ namespace WpfTechnProcessMonitoring.Viev
 
         private void InfoButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Process.Start(_openDocx);
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTechnProcessMonitoring.Viev"
         mc:Ignorable="d"
-        Title="AboutViev" Height="300" Width="400" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="О программе" Height="300" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="MainTextBlock">
             <Setter Property="Foreground" Value="Black"/>

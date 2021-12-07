@@ -10,7 +10,7 @@ namespace TechnProcessMonitoring.BL.Controller
 {
     public class DataTechnProcessController
     {
-        private string _directory_result = "..\\..\\..\\Results";
+        private string _directoryResult = "..\\..\\..\\Results";
         private string _directoryReport = "..\\..\\..\\Reports";
         private string _directoryImage = "..\\..\\..\\Image";
 
@@ -27,7 +27,7 @@ namespace TechnProcessMonitoring.BL.Controller
 
         public void Save(string fileName)
         {
-            var directory = Directory.CreateDirectory(_directory_result);
+            var directory = Directory.CreateDirectory(_directoryResult);
             var formatter = new BinaryFormatter();
 
             using (FileStream fs = new FileStream(directory.FullName + $"\\ {fileName}.dat", FileMode.OpenOrCreate))
